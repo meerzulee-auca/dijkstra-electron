@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container mx-auto flex flex-col py-4 px-6">
+    <div class="container mx-auto flex flex-col p-10">
       <div class="flex">
         <h1 class="text-3xl">Calculating the shortest path:</h1>
         <button class="bg-green-600 mx-2 px-3 py-2 text-white" @click="example()">Example 1</button>
@@ -27,7 +27,7 @@
       <div class="flex">
         <button class="bg-blue-600 h-10 mx-2 px-3 py-1 text-white" @click="addVertex()">Add vertex</button>
       </div>
-      <div class="flex justify-center mt-4">
+      <div class="flex justify-center mt-8">
         <div class="flex flex-col">
           <div class="flex">
             <h1>Start node:</h1>
@@ -73,14 +73,6 @@
 
 <script>
 import Child from "./components/Child.vue";
-
-function log(message) {
-  const logging = true;
-  if (logging) {
-    console.log(message);
-  }
-}
-
 const lowestCostNode = (costs, processed) => {
   return Object.keys(costs).reduce((lowest, node) => {
     if (lowest === null || costs[node] < costs[lowest]) {
@@ -91,8 +83,12 @@ const lowestCostNode = (costs, processed) => {
     return lowest;
   }, null);
 };
-
-// function that returns the minimum cost and path to reach Finish
+function log(message) {
+  const logging = false;
+  if (logging) {
+    console.log(message);
+  }
+}
 const dijkstra = (graph, startNodeName, endNodeName) => {
   // track the lowest cost to reach each node
   let costs = {};
@@ -124,7 +120,7 @@ const dijkstra = (graph, startNodeName, endNodeName) => {
           "Evaluating cost to node " + n + " (looking from node " + node + ")"
         );
         log("Last Cost: " + costs[n]);
-        let newCost = Number(cost) + Number(children[n]);
+        let newCost = cost + children[n];
         log("New Cost: " + newCost);
         if (!costs[n] || costs[n] > newCost) {
           costs[n] = newCost;
@@ -154,7 +150,6 @@ const dijkstra = (graph, startNodeName, endNodeName) => {
 
   return results;
 };
-
 export default {
   name: "App",
   components: {
